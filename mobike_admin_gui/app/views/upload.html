@@ -1,0 +1,39 @@
+<div class="modal-header">
+    <button type="button" class="close" ng-click="ok()">&times;</button>
+    <h4 class="modal-title">Upload</h4>
+</div>
+<div class="modal-body relative">
+    <!--chat-->
+    <div class="panel-body">
+        <form class="form-inline" enctype="multipart/form-data">
+            <div class="form-group file-cont">
+                <input type="text" class="form-control"   placeholder="Please select the file">
+                <input id="file" type="file" multiple="multiple" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel"  onchange='angular.element(this).scope().fileChanged(this)'>
+            </div>
+            <div class="form-group">
+                <select class="select-control" ng-model="file.filetype" ng-options="item.key for item in file.types">
+                    <option value="">-- Select Type --</option>
+                </select>
+            </div>
+            <div ng-if="file.fileInfo.length >0">
+                <table class="table table-striped text-center">
+                    <thead>
+                    <tr>
+                        <th>File Name</th>
+                        <!--<th>File Size</th>-->
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="c in file.fileInfo">
+                        <td> {{c.name}}</td>
+                        <!--<td>{{c.size}}</td>-->
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </form>
+    </div>
+</div>
+<div class="modal-footer">
+    <button type="submit" class="btn btn-primary" ng-click="uploads()">Upload</button>
+</div>

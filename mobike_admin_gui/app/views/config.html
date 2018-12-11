@@ -1,0 +1,194 @@
+<div class="modal-body relative">
+    <button type="button" class="close close_m" ng-click="ok()">&times;</button>
+    <md-content class="background_white" style="min-height: 400px;">
+        <md-tabs md-dynamic-height md-border-bottom>
+            <md-tab label="Dev Account" ng-click="configTab1()" funfiltertab="chatbot_config_dev_account">
+                <md-content class="md-padding background_white">
+                    <div class="form-bottom">
+                        <span class="font-weight">User Id</span>
+                        <div class="input-div">
+                            <input type="text" placeholder="User Id" ng-model="config.nameadd" class="demo-input">
+                        </div>
+                        <button class="btn btn-primary" ng-click="doUserpost()" >Add</button>
+                    </div>
+                    <table class="table table-striped text-center">
+                        <thead>
+                            <tr>
+                                <th>User Id</th>
+                                <th>Operation</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- <tr class="goUserget"><td colspan="2">NO Data!</td></tr> -->
+                            <tr ng-repeat="c in config.doUsergetDatas">
+                                <td class="relative" id="{{c.id}}" width="50%">
+                                    <span ng-dblclick="dblclickName(c.id)">{{c.name}}</span>
+                                    <input class="config-int" ng-blur="editUser(c.id)" type="text" ng-model="config.name" />
+                                </td>
+                                <td width="50%">
+                                    <span class="operation" ng-click="dblclickName(c.id)"><i class="glyphicon glyphicon-edit"></i></span>
+                                    <span class="operation" ng-click="deleteName(c.id)"><i class="glyphicon glyphicon-trash"></i></span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <tm-pagination conf="paginationDouser"></tm-pagination>
+                </md-content>
+            </md-tab>
+            <md-tab label="Common Dialog" ng-click="configTab6()" funfiltertab="chatbot_config_train">
+                <md-content class="md-padding background_white">
+                    <div class="form-bottom" style="text-align: right;">
+                    	<span class="font-weight">Type</span>
+                        <select class="select-control" placeholder="Type"
+                            ng-model="config.change_t"
+                            ng-options="item for item in config.auto_typesData"
+                            ng-change="seachChangeAuto(config.change_t)"
+                            style="margin: 0 10px; width: 100px;">
+                        </select>
+                        <button class="btn btn-primary" ng-click="addAutoReplyModel()">Add</button>
+                    </div>
+                    <table class="table table-striped text-center">
+                        <thead>
+                            <tr>
+
+                                <th>Question</th>
+                                <th width="30%">Answer</th>
+                                <th>Type</th>
+                                <th>User Id</th>
+                                <th>Operation</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="c in config.auto_autoPlay" ng-init="tooltips();">
+                                <td><span data-toggle="tooltip" data-placement="top" title="{{c.question}}" class="white-space" style="max-width: 147px;">{{c.question}}</span></td>
+                                <td><span data-toggle="tooltip" data-placement="top" title="{{c.answer}}" class="white-space" style="max-width: 147px;">{{c.answer}}</span></td>
+                                <td>{{c.question_type}}</td>
+                                <td><span>{{c.modifier}}</span></td>
+                                <td>
+                                    <span class="operation" ng-click="updateAutoReply(c)"><i class="glyphicon glyphicon-edit"></i></span>
+                                    <span class="operation" ng-click="deleteAutoReply(c.id)"><i class="glyphicon glyphicon-trash"></i></span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <tm-pagination conf="paginationAutoReply"></tm-pagination>
+                </md-content>
+            </md-tab>
+
+
+            <md-tab label="Holiday" ng-click="configTab11()" funfiltertab="chatbot_config_relation_question">
+                <md-content class="md-padding background_white">
+                    <div class="form-bottom" style="text-align: right;">
+                        <button class="btn btn-primary" ng-click="addholidayModel()">Add</button>
+                    </div>
+                    <table class="table table-striped text-center">
+                        <thead>
+                        <tr>
+                            <th>Start Date</th>
+                            <th>End Date</th>
+                            <th>En Answer</th>
+                            <th>Cn Answer</th>
+                            <th>Operator</th>
+                            <th>Date</th>
+                            <th>Operation</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="c in config.holiday_data" ng-init="tooltips();">
+                            <td>{{c.start_date}}</td>
+                            <td>{{c.end_date}}</td>
+                            <td>
+                                <span data-toggle="tooltip" data-placement="top" title="{{c.en_answer}}" class="white-space" style="max-width: 147px;">{{c.en_answer}}</span>
+                            </td>
+                            <td>
+                                <span data-toggle="tooltip" data-placement="top" title="{{c.cn_answer}}" class="white-space" style="max-width: 147px;">{{c.cn_answer}}</span>
+                            </td>
+                            <td>{{c.operator}}</td>
+                            <td>{{c.date}}</td>
+                            <td>
+                                <span class="operation" ng-click="deleteHoliday(c.id)"><i class="glyphicon glyphicon-trash"></i></span>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <tm-pagination conf="paginationQueryHholiday"></tm-pagination>
+                </md-content>
+            </md-tab>
+            <md-tab label="Weekday" ng-click="configTab12()" funfiltertab="chatbot_config_relation_question">
+                <md-content class="md-padding background_white">
+                    <div class="time-piker">
+                        <div class="input-div">
+                            <input type="text" id="sTime" name="sTime" r class="demo-input timepicker timepicker-default" placeholder="Start Time" ng-model="config.sTime">
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
+                        </div>
+                        <div class="input-div">
+                            <input type="text" id="eTime" name="eTime" class="demo-input timepicker timepicker-default" placeholder="End Time" ng-model="config.eTime">
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
+                        </div>
+                    </div>
+                    <div class="form-bottom" style="text-align: left;margin-left: 460px;">
+                        <button class="btn btn-primary" ng-click="addWeekday()">Add</button>
+                    </div>
+                    <table class="table table-striped text-center">
+                        <thead>
+                        <tr>
+                            <th>Start Time</th>
+                            <th>End Time</th>
+                            <th>Operator</th>
+                            <th>Date</th>
+                            <th>Operation</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="c in config.weekday_data" ng-init="tooltips();">
+                            <td>{{c.start_time}}</td>
+                            <td>{{c.end_time}}</td>
+                            <td>{{c.operator}}</td>
+                            <td>{{c.date}}</td>
+                            <td>
+                                <span class="operation" ng-click="deleteweekday(c.id)"><i class="glyphicon glyphicon-trash"></i></span>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </md-content>
+            </md-tab>
+            <md-tab label="Invalid Question" ng-click="configTabQuestion()" funfiltertab="chatbot_config_low_question">
+                <md-content class="md-padding background_white">
+                    <div class="form-bottom" style="text-align: left;margin-left: 349px;">
+                        <span class="font-weight">User Id</span>
+                        <div class="input-div">
+                            <input type="text" placeholder="User Id" ng-model="configLowQuestion.userId" class="demo-input">
+                        </div>
+                        <button class="btn btn-primary" ng-click="queryUserQuestion()">Search</button>
+                        <button class="btn btn-primary" ng-click="addQuestionModel()">Add</button>
+                    </div>
+                    <table class="table table-striped text-center">
+                        <thead>
+                        <tr>
+                            <th>Question</th>
+                            <th>User Id</th>
+                            <th>Date</th>
+                            <th>Operation</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="c in config.lowquestion_data" ng-init="tooltips();">
+                            <td><span data-toggle="tooltip" data-placement="top" title="{{c.text}}" class="white-space" style="max-width: 147px;">{{c.text}}</span></td>
+                            <td>{{c.name}}</td>
+                            <td>{{c.date}}</td>
+                            <td>
+                                <span class="operation" ng-click="updateUserQuestion(c)"><i class="glyphicon glyphicon-edit"></i></span>
+                                <span class="operation" ng-click="deletelowQuestion(c.id)"><i class="glyphicon glyphicon-trash"></i></span>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <tm-pagination conf="paginationUserQuestion"></tm-pagination>
+                </md-content>
+            </md-tab>
+
+
+        </md-tabs>
+    </md-content>
+</div>

@@ -1,0 +1,51 @@
+<div class="modal-body relative">
+    <button type="button" class="close close_m" ng-click="ok()">&times;</button>
+    <md-content class="background_white" style="min-height: 400px;">
+        <md-tabs md-dynamic-height md-border-bottom>
+            <md-tab label="Record Log" ng-click="logUploadFiles()" funfiltertab="chatbot_log_Update_files">
+                <md-content class="md-padding background_white">
+                    <div class="form-bottom" style="text-align: right;">
+                        <span class="font-weight">Type</span>
+                        <select class="select-control" placeholder="Type"
+                                ng-options="item.key for item in file.types"
+                                ng-model="file.filetype">
+                        </select>
+                        <button class="btn btn-primary" ng-click="queryUpdateUploadFiles()">Search</button>
+                    </div>
+                    <!--<div class="form-bottom" style="text-align: left;margin-left: 349px;">-->
+                        <!--<span class="font-weight">Times</span>-->
+                        <!--<div class="input-div">-->
+                            <!--<input type="text" placeholder="Please select the date" id="uploadDate" class="demo-input input_field_madoka">-->
+                            <!--<label for="uploadDate" class="input_label">-->
+                                <!--<svg width="100%" height="100%" rx="4" ry="4" viewBox="0 0 404 77" preserveAspectRatio="none" class="graphic">-->
+                                    <!--<path d="m0,0l404,0l0,77l-404,0l0,-77z"></path>-->
+                                <!--</svg>-->
+                            <!--</label>-->
+                        <!--</div>-->
+                        <!--<button class="btn btn-primary" ng-click="queryUserQuestion()">Search</button>-->
+                    <!--</div>-->
+                    <table class="table table-striped text-center">
+                        <thead>
+                        <tr>
+                            <th>Description</th>
+                            <th>Type</th>
+                            <th>State</th>
+                            <th>Date</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="c in UploadFiles_data" ng-init="tooltips();">
+                            <td><span data-toggle="tooltip" data-placement="top" title="{{c.description}}" class="white-space" style="max-width: 266px;">{{c.description}}</span></td>
+                            <td>{{c.type == 'FA'?'Finance':'Procurement'}}</td>
+                            <td>{{c.state?'成功':'失败'}}</td>
+                            <td>{{c.date}}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <tm-pagination conf="paginationUploadFiles"></tm-pagination>
+                </md-content>
+            </md-tab>
+
+        </md-tabs>
+    </md-content>
+</div>
